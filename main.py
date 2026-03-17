@@ -13,7 +13,7 @@ if __name__ == "__main__":
     danh_sach_thang = [f'Tháng {j}' for j in range(1,6)]
     
     # 1. Giao diện chọn file
-    uploaded_file = st.file_uploader("Chọn file CSV dữ liệu tuần này", type=["csv"])
+    uploaded_file = st.file_uploader("Chọn file Excel dữ liệu tuần này", type=["xls"])
     uploaded_file_pre = st.file_uploader("Chọn file CSV dữ liệu up web tuần trước", type=["csv"])
 
     input_tuan = st.selectbox(
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     if uploaded_file is not None and uploaded_file_pre is not None:
         # 2. Đọc dữ liệu
-        df1 = pd.read_csv(uploaded_file)
+        df1 = pd.read_excel(uploaded_file, engine='calamine')
         df_up_web = pd.read_csv(uploaded_file_pre)
         
         st.write("Xem trước dữ liệu đã tải lên:")
@@ -57,6 +57,6 @@ if __name__ == "__main__":
             st.download_button(
                 label="Tải file kết quả (CSV)",
                 data=towrite,
-                file_name=f"Ket_qua_Tuan_{input_tuan}.csv",
+                file_name=f"Ket_qua_Tuan_{input_tuan}_{input_thang}.csv",
                 mime="text/csv"
             )

@@ -21,6 +21,7 @@ def tao_file_up_web(df_thucte: pd.DataFrame, df_up_web: pd.DataFrame, tuan_input
     df_up_web['VNEDU'] = df_up_web['VNEDU'].astype(str) 
     df_thucte_grouped['Mã học sinh'] = df_thucte_grouped['Mã học sinh'].astype(str) 
     df_up_web[f'{thang_input}'] = df_up_web[f'{thang_input}'].astype(object)
+    df_up_web['Điểm rèn luyện'] = df_up_web['Điểm rèn luyện'].astype(object)
 
     for index, row in df_thucte_grouped.iterrows():
         mshs = row['Mã học sinh']
@@ -43,11 +44,11 @@ def tao_file_up_web(df_thucte: pd.DataFrame, df_up_web: pd.DataFrame, tuan_input
         if condition.any():
             df_up_web.loc[condition, f'{thang_input}'] = loi_format
 
-    # df_up_web[f'{thang_input}'] = df_up_web[f'{thang_input}'].astype(str)
-    # df_up_web['Điểm rèn luyện'] = df_up_web['Điểm rèn luyện'].astype(str)
-    
-    # # Thay thế các giá trị 'nan' (chuỗi) thành chuỗi rỗng để bảng đẹp hơn
-    # df_up_web[f'{thang_input}'] = df_up_web[f'{thang_input}'].replace('nan', '')
-    # df_up_web['Điểm rèn luyện'] = df_up_web['Điểm rèn luyện'].replace('nan', '')
+    df_up_web['Điểm rèn luyện'] = df_up_web['Điểm rèn luyện'].astype(str)
+    df_up_web[f'{thang_input}'] = df_up_web[f'{thang_input}'].astype(str)
 
+
+    # 2. Xử lý các giá trị NaN/None nếu có để bảng trông sạch hơn
+    df_up_web['Điểm rèn luyện'] = df_up_web['Điểm rèn luyện'].replace(['nan', 'None', 'NaN'], '')
+    df_up_web[f'{thang_input}'] = df_up_web[f'{thang_input}'].replace(['nan', 'None', 'NaN'], '')
     return df_up_web
